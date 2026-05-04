@@ -6,6 +6,8 @@ ifeq ($(strip $(DEVKITARM)),)
 $(error "Please set DEVKITARM in your environment. export DEVKITARM=<path to>devkitARM")
 endif
 
+GFX := $(or $(shell grep -sE '^GFX=' .env | head -1 | cut -d= -f2- | tr -d '"'),gfx/default)
+
 TOPDIR ?= $(CURDIR)
 include $(DEVKITARM)/3ds_rules
 
@@ -38,7 +40,7 @@ BUILD		:=	build
 SOURCES		:=	source source/ui source/parsing source/loaders
 DATA		:=	data
 INCLUDES	:=	include
-GRAPHICS	:=	gfx
+GRAPHICS	:=	$(GFX)
 ROMFS		:=	romfs
 GFXBUILD	:=	$(ROMFS)/gfx
 
